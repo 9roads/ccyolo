@@ -1,0 +1,25 @@
+# Binary
+ccyolo
+ccyolo.exe
+
+# Build output
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Go
+vendor/
+
+# Logs
+*.log
+
+# Local Claude Code settings (project-specific)
+.claude/
