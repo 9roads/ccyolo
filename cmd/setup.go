@@ -4,12 +4,31 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
+	"runtime"
 	"strings"
 
 	"github.com/9roads/ccyolo/internal/claude"
 	"github.com/9roads/ccyolo/internal/config"
 	"github.com/spf13/cobra"
 )
+
+const apiKeysURL = "https://console.anthropic.com/settings/keys"
+
+func openBrowser(url string) error {
+	var cmd *exec.Cmd
+	switch runtime.GOOS {
+	case "darwin":
+		cmd = exec.Command("open", url)
+	case "linux":
+		cmd = exec.Command("xdg-open", url)
+	case "windows":
+		cmd = exec.Command("rundll32", "url.dll,FileProtocolHandler", url)
+	default:
+		return fmt.Errorf("unsupported platform")
+	}
+	return cmd.Start()
+}
 
 var setupCmd = &cobra.Command{
 	Use:   "setup",
@@ -34,6 +53,18 @@ var setupCmd = &cobra.Command{
 
 		reader := bufio.NewReader(os.Stdin)
 		var key string
+
+		// Offer to open browser
+		fmt.Printf("Open %s in browser? [Y/n]: ", apiKeysURL)
+		answer, _ := reader.ReadString('\n')
+		answer = strings.TrimSpace(strings.ToLower(answer))
+		if answer != "n" && answer != "no" {
+			if err := openBrowser(apiKeysURL); err != nil {
+				fmt.Printf("Could not open browser: %v\n", err)
+				fmt.Printf("Please visit: %s\n", apiKeysURL)
+			}
+		}
+		fmt.Println()
 
 		for {
 			fmt.Println("Enter your Anthropic API key:")
