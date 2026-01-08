@@ -12,23 +12,10 @@ This tool automatically approves operations without explicit user confirmation. 
 
 ## Installation
 
-### macOS (Homebrew)
-
-```bash
-brew install 9roads/tap/ccyolo
-```
-
-### Linux / macOS (curl)
+### Linux / macOS
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/9roads/ccyolo/main/install.sh | bash
-```
-
-### Windows (Scoop)
-
-```bash
-scoop bucket add 9roads https://github.com/9roads/scoop-bucket
-scoop install ccyolo
 ```
 
 ### From Source
@@ -130,8 +117,8 @@ Config stored in `~/.config/ccyolo/config.json`:
 ## Uninstall
 
 ```bash
-ccyolo uninstall  # Remove hook
-# Then uninstall via your package manager
+ccyolo uninstall        # Remove hook from Claude Code
+sudo rm /usr/local/bin/ccyolo  # Remove binary
 ```
 
 ## License
